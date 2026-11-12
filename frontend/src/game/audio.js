@@ -1,9 +1,3 @@
-const LEGACY = new Set(["mission", "finale", "say-dial", "say-ext", "say-kit", "say-map", "say-order",
-  ...[1, 2, 3, 4, 5, 6, 7, 8].flatMap((n) => [`s${n}-scene`, `s${n}-action`, `s${n}-stamp`, `s${n}-prompt`])]);
-const ALIAS = { "ok-1": "r-ok1", "ok-2": "r-ok2", "no-1": "r-no1", "no-2": "r-no2" };
-LEGACY.delete("s1-prompt");
-LEGACY.delete("s8-prompt");
-
 const HIJAZ = [0, 1, 4, 5, 7, 8, 10];
 const MAJOR = [0, 2, 4, 5, 7, 9, 11];
 const hz = (root, scale, deg, oct = 0) => {
@@ -39,7 +33,7 @@ class Engine {
       this.applyVol();
       this.timer = window.setInterval(() => this.tick(), 60);
       ["rain", "wind", "river", "thunder1", "thunder2"].forEach((s) => this.sample(s));
-      fetch("/voice/v2/manifest.json", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).then((m) => (this.manifest = m)).catch(() => {});
+      this.ready = fetch("/voice/v2/manifest.json", { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).then((m) => (this.manifest = m)).catch(() => {});
     }
     if (this.ctx.state === "suspended") this.ctx.resume();
     if (this.pendingAmb) this.ambience(this.pendingAmb);
@@ -165,14 +159,11 @@ class Engine {
   }
 
   voiceUrl(id) {
-    if (id === "intro-1") return "/voice/intro.wav";
-    if (this.manifest?.ids?.includes(id)) return `/voice/v2/${id}.mp3?v=${this.manifest.v}`;
-    if (ALIAS[id]) return `/voice/${ALIAS[id]}.mp3`;
-    if (LEGACY.has(id)) return `/voice/${id}.mp3`;
-    return null;
+    return this.manifest?.ids?.includes(id) ? `/voice/v2/${id}.mp3?v=${this.manifest.v}` : null;
   }
 
   async loadVoice(id) {
+    await this.ready;
     const url = this.voiceUrl(id);
     if (!url || !this.ctx) return null;
     const k = `v:${url}`;

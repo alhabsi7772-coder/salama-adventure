@@ -56,7 +56,7 @@ export function KitChallenge({ api }) {
         {items.map((it) => {
           const used = inBag.includes(it.id);
           return (
-            <motion.button key={it.id} type="button" drag={!used} dragSnapToOrigin dragElastic={0.6} whileDrag={{ scale: 1.08, zIndex: 50 }}
+            <motion.button key={it.id} type="button" drag={false}
               onDrag={(e, info) => setOver(overBag({ x: e.clientX ?? info.point.x, y: e.clientY ?? info.point.y }))}
               onDragEnd={(e, info) => { setOver(false); const p = { x: e.clientX ?? info.point.x, y: e.clientY ?? info.point.y }; if (overBag(p)) drop(it); }}
               onTap={() => !used && drop(it)}
