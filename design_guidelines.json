@@ -1,0 +1,163 @@
+{
+  "project_identity": {
+    "name": "سفيرة السلامة – مواجهة النينو في مدرسة رقية",
+    "english_title": "Safety Ambassador: Facing El Niño at Ruqayya School",
+    "context": "Educational 2D/2.5D Adventure Game for Grades 10-12 at Ruqayya Girls' School, Sultanate of Oman",
+    "emotional_tone": "Cinematic, Heroic, Empathetic, Omani Cultural Pride, Preparedness & Courage",
+    "target_audience": "Female High School Students (Grades 10-12) & Teachers",
+    "design_archetype": "LUXURY & PERFORMANCE PRO (Dark Ink Cinematic, Gold Foil Accents, Omani Heritage Stamps)",
+    "direction": "Full RTL, zero generic SaaS card templates, high-contrast immersive game interface with narrative warmth"
+  },
+  "typography": {
+    "font_family_display": "'Noto Kufi Arabic', 'Cairo', sans-serif",
+    "font_family_body": "'Noto Sans Arabic', 'Tajawal', sans-serif",
+    "font_family_document": "'Amiri', 'Traditional Arabic', serif",
+    "direction": "rtl",
+    "hierarchy": {
+      "h1_hero": "text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-amber-300 drop-shadow-md",
+      "h2_section": "text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-100",
+      "h3_subtitle": "text-xl sm:text-2xl font-semibold text-amber-400",
+      "dialogue_text": "text-lg sm:text-xl font-medium leading-relaxed text-slate-100",
+      "body_text": "text-base font-normal leading-relaxed text-slate-200",
+      "label_text": "text-xs sm:text-sm font-bold tracking-widest uppercase text-amber-200/80"
+    }
+  },
+  "colors": {
+    "palette": {
+      "background_ink": "#0a1128",
+      "background_ink_light": "#111d42",
+      "gold_foil": "#d4af37",
+      "gold_foil_light": "#f3e5ab",
+      "gold_foil_dark": "#996515",
+      "omani_red": "#9e1b32",
+      "omani_red_hover": "#c41e3a",
+      "omani_navy": "#1b3a6b",
+      "omani_green": "#0e6b45",
+      "sky_blue_hijab": "#38bdf8",
+      "el_nino_storm_amber": "#f59e0b",
+      "el_nino_alert_red": "#ef4444",
+      "surface_glass": "rgba(10, 17, 40, 0.85)",
+      "surface_card": "#131f40",
+      "surface_border": "rgba(212, 175, 55, 0.3)"
+    },
+    "surface_rules": {
+      "header_nav": "bg-slate-950/80 backdrop-blur-md border-b border-amber-500/20 text-slate-100",
+      "dialogue_box": "bg-slate-950/90 backdrop-blur-xl border-2 border-amber-500/40 shadow-[0_0_30px_rgba(212,175,55,0.15)] rounded-2xl",
+      "challenge_card": "bg-slate-900/90 backdrop-blur-md border border-slate-700/60 rounded-xl p-6 shadow-2xl",
+      "passport_leather": "bg-[#2b1810] border-4 border-[#5c3a21] shadow-2xl rounded-2xl text-[#f3e5ab]"
+    }
+  },
+  "grids_and_layouts": {
+    "game_container": "relative w-full min-h-screen bg-[#0a1128] text-slate-100 overflow-hidden dir-rtl font-['Noto_Sans_Arabic']",
+    "viewport_frame": "relative max-w-7xl mx-auto min-h-screen flex flex-col justify-between p-4 sm:p-6",
+    "bento_map_grid": "grid grid-cols-1 md:grid-cols-4 gap-6 p-4 sm:p-8",
+    "dialogue_layout": "fixed bottom-4 left-4 right-4 md:left-12 md:right-12 z-40 max-w-5xl mx-auto flex flex-col md:flex-row gap-4 items-center",
+    "passport_grid": "grid grid-cols-2 md:grid-cols-4 gap-4 p-6"
+  },
+  "motion_and_animations": {
+    "framers": {
+      "scene_fade": "initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}",
+      "dialogue_appear": "initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ type: 'spring', damping: 20 }}",
+      "stamp_slap": "initial={{ scale: 3, opacity: 0, rotate: -15 }} animate={{ scale: 1, opacity: 1, rotate: 0 }} transition={{ type: 'spring', stiffness: 300, damping: 15 }}"
+    },
+    "canvas_effects": "TSParticles rain & lightning atmospheric canvas overlay during storm levels; Canvas Confetti trigger on level completion"
+  },
+  "sound_design": {
+    "audio_channels": [
+      { "id": "master", "label": "الصوت العام", "default": 0.8 },
+      { "id": "music", "label": "الموسيقى الخلفية", "default": 0.6 },
+      { "id": "sfx", "label": "المؤثرات الصوتية", "default": 0.9 },
+      { "id": "voice", "label": "التعليق الصوتي (الراوي)", "default": 1.0 }
+    ],
+    "sfx_events": [
+      "ui_click",
+      "stamp_slap",
+      "correct_answer",
+      "wrong_answer",
+      "rain_storm_loop",
+      "alarm_siren",
+      "level_complete_fanfare"
+    ]
+  },
+  "component_structure": {
+    "screens": [
+      {
+        "component_name": "CinematicIntro",
+        "path": "src/components/game/CinematicIntro.js",
+        "description": "Skippable animated prologue detailing the arrival of El Niño weather front over Oman, introducing Ruqayya School & Ambassador character."
+      },
+      {
+        "component_name": "StudentRegistrationModal",
+        "path": "src/components/game/StudentRegistrationModal.js",
+        "description": "Modal for entering student name and grade class, issuing the official Safety Passport."
+      },
+      {
+        "component_name": "AdventureMap",
+        "path": "src/components/game/AdventureMap.js",
+        "description": "Interactive school map showing 8 levels with status (completed/active/locked), star ratings, passport launcher, and settings."
+      },
+      {
+        "component_name": "LevelPlayScreen",
+        "path": "src/components/game/LevelPlayScreen.js",
+        "description": "Main gameplay shell hosting high-res background, HUD bar, character dialogue box, and active interactive challenge."
+      },
+      {
+        "component_name": "SafetyPassportDrawer",
+        "path": "src/components/game/SafetyPassportDrawer.js",
+        "description": "2-Page leather passport displaying 8 collected Omani ink stamps, student details, achievements, and statistics."
+      },
+      {
+        "component_name": "SettingsModal",
+        "path": "src/components/game/SettingsModal.js",
+        "description": "Audio volume controls (Master, Music, SFX, Narrator) and RTL display options."
+      },
+      {
+        "component_name": "ResultsScreen",
+        "path": "src/components/game/ResultsScreen.js",
+        "description": "Final victory summary with overall score, total stars, passport verification, learning takeaways, and certificate trigger."
+      },
+      {
+        "component_name": "ArabicCertificate",
+        "path": "src/components/game/ArabicCertificate.js",
+        "description": "Printable A4 landscape certificate with gold borders, school seal, stamp, student name, class, and print/download PDF functionality."
+      }
+    ],
+    "challenges": [
+      "MultipleChoiceChallenge",
+      "HotspotHazardSearchChallenge",
+      "DragDropEmergencyKitChallenge",
+      "PhoneDial9999Challenge",
+      "MapEvacuationRouteChallenge",
+      "StepOrderingChallenge",
+      "FireExtinguisherSelectChallenge",
+      "TimedDecisionChallenge"
+    ]
+  },
+  "media": {
+    "character_avatars": {
+      "main_hero": "Omani schoolgirl in sky-blue hijab, white shirt, navy pinafore (idle, speaking, thinking, celebrating, alert expressions)",
+      "school_principal": "School principal in elegant Omani attire",
+      "civil_defense_officer": "Civil Defense Official in official uniform"
+    },
+    "image_urls": {
+      "hero_bg": "https://images.unsplash.com/photo-1608806405132-82eb2913a7c4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTJ8MHwxfHNlYXJjaHwyfHxPbWFuJTIwYXJjaGl0ZWN0dXJlJTIwc2Nob29sJTIwc3Rvcm0lMjByYWlueSUyMHdlYXRoZXJ8ZW58MHx8fHwxNzk0NTExOTAyfDA&ixlib=rb-4.1.0&q=85",
+      "character_hero": "https://images.unsplash.com/photo-1596664427764-1a29079a6b6e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzZ8MHwxfHNlYXJjaHwxfHxtaWRkbGUlMjBlYXN0ZXJuJTIwZ2lybCUyMHN0dWRlbnQlMjBzY2hvb2wlMjB1bmlmb3JtJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzk0NTExOTAyfDA&ixlib=rb-4.1.0&q=85",
+      "school_exterior": "https://images.unsplash.com/photo-1642332725730-09757ee74813?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTJ8MHwxfHNlYXJjaHw0fHxPbWFuJTIwYXJjaGl0ZWN0dXJlJTIwc2Nob29sJTIwc3Rvcm0lMjByYWlueSUyMHdlYXRoZXJ8ZW58MHx8fHwxNzk0NTExOTAyfDA&ixlib=rb-4.1.0&q=85",
+      "storm_weather": "https://images.unsplash.com/photo-1722929207107-013cfb21068f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTJ8MHwxfHNlYXJjaHwzfHxPbWFuJTIwYXJjaGl0ZWN0dXJlJTIwc2Nob29sJTIwc3Rvcm0lMjByYWlueSUyMHdlYXRoZXJ8ZW58MHx8fHwxNzk0NTExOTAyfDA&ixlib=rb-4.1.0&q=85"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Ensure the application strictly follows RTL direction by using dir='rtl' on top-level elements.",
+    "Import Noto Kufi Arabic, Noto Sans Arabic, and Amiri Google Fonts into index.html or index.css.",
+    "Add data-testid attributes to all buttons, input fields, interactive options, sound toggles, and navigation nodes.",
+    "Ensure sound effects work seamlessly with Web Audio API or audio elements, fallback gracefully if autoplay policy blocks audio.",
+    "Implement the Printable Certificate with dedicated @media print CSS rules so that printing hides header/footer UI elements and formats clean A4 landscape output.",
+    "Maintain state in local storage so students do not lose their passport stamps or progress upon refreshing.",
+    "Validate student registration name and class grade before initiating game map."
+  ],
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": {
+    "rtl_requirement": "All typography, margins, paddings, and flex directions must adapt to RTL.",
+    "contrast_requirement": "Maintain minimum 4.5:1 text contrast using amber/white text on dark navy translucent surfaces.",
+    "test_id_requirement": "Every clickable element (level node, choice button, volume slider, passport toggle) MUST include data-testid."
+  }
+}

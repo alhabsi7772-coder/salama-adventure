@@ -60,7 +60,17 @@ class StatusCheckCreate(BaseModel):
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "Safety Ambassador API"}
+
+
+@api_router.get("/voice/status")
+async def voice_status():
+    manifest = ROOT_DIR.parent / "frontend/public/voice/v2/manifest.json"
+    if not manifest.exists():
+        return {"cloned": False, "lines": 0}
+    import json
+    data = json.loads(manifest.read_text(encoding="utf-8"))
+    return {"cloned": True, "lines": len(data.get("ids", [])), "version": data.get("v")}
 
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
